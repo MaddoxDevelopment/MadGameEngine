@@ -1,9 +1,10 @@
 ﻿using System;
+using Newtonsoft.Json;
 using OpenTK;
 
 namespace GameEngine
 {
-	public class GameObjectPosition
+	public class GameObjectPosition : ICloneable
 	{
 		public float X { get; private set; }
 		public float Y { get; private set; }
@@ -23,6 +24,22 @@ namespace GameEngine
 		public void Right(float x) => X += x;
 		public void Up(float y) => Y -= y;
 		public void Down(float y) => Y += y;
+
+		public override bool Equals(object obj)
+		{
+			if (obj is GameObjectPosition casted)
+			{
+				var x = (int)casted.X;
+				var y = (int)casted.Y;
+				return x == (int)X && y == (int)Y;
+			}
+			return false;
+		}
+
+		public object Clone()
+		{
+			return MemberwiseClone();
+		}
 	}
 
 	public class GameObject
@@ -36,6 +53,5 @@ namespace GameEngine
 			Position = new GameObjectPosition();
 			Vectors = new Vector2[0];
 		}
-	
 	}
 }

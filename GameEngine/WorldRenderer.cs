@@ -8,8 +8,11 @@ namespace GameEngine
 	public class WorldRenderer : Renderer
 	{
 		private bool animating;
-		private int upFrames;
-		private int downFrames;
+		private int lastNumber;
+		private bool isDropping;
+		private bool clearedAnimTimer;
+		private double animTimer;
+		private GameObjectPosition original;
 		
 		public WorldRenderer(GameWindow window, IList<GameObject> objects) : base(window, objects)
 		{
@@ -28,28 +31,39 @@ namespace GameEngine
 
 		public override void OnFrameUpdate(FrameEventArgs e)
 		{
+			if (animating && !clearedAnimTimer)
+			{
+				var obj = ObjectMap[0];
+				original = (GameObjectPosition)obj.Position.Clone();
+				animTimer = 0;
+				lastNumber = -1;
+				clearedAnimTimer = true;
+			}
 			if (animating)
 			{
 				var obj = ObjectMap[0];
-				if (upFrames < 10)
+				if (!isDropping)
 				{
-					obj.Position.Up(upFrames * 10);
-					UpdateGameObject(0, obj);
-					upFrames++;
+					obj.Position.Up(60);
 				}
-				else
+				if (original.Y - obj.Position.Y >= 400)
 				{
-					obj.Position.Down(downFrames * 10);
-					UpdateGameObject(0, obj);
-					downFrames++;
+					isDropping = true;
 				}
-				if (upFrames == 10 && downFrames == 10)
+				if (isDropping)
 				{
-					upFrames = 0;
-					downFrames = 0;
-					animating = false;
+					obj.Position.Down(60);					
+					if (obj.Position.Equals(original))
+					{
+						isDropping = false;
+						clearedAnimTimer = false;
+						animating = false;
+						return;
+					}
 				}
+				
 			}
+	
 			base.OnFrameUpdate(e);
 		}
 	}
