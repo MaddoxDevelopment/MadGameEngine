@@ -18,7 +18,13 @@ namespace GameEngine
 		{
 			
 		}
-
+		
+		
+		public virtual void OnFrameUpdate(FrameEventArgs e)
+		{
+			
+		}
+		
 		public Dictionary<int, GameObject> ObjectMap => _objects;
 
 		public Renderer(GameWindow window, IList<GameObject> objects)

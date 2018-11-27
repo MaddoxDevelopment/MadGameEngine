@@ -15,7 +15,7 @@ namespace GameEngine
 		static void Main(string[] args)
 		{
 			var window = new Game(1650, 1050, GraphicsMode.Default);
-			window.Run();
+			window.Run(60, 60);
 		}
 	}
 
@@ -90,7 +90,12 @@ namespace GameEngine
 			base.OnMouseUp(e);
 		}
 		*/
-		
+
+		protected override void OnUpdateFrame(FrameEventArgs e)
+		{
+			base.OnUpdateFrame(e);
+			_renderer.OnFrameUpdate(e);
+		}
 
 		protected override void OnRenderFrame(FrameEventArgs e)
 		{

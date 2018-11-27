@@ -24,7 +24,7 @@ namespace GameEngine
 				{
 					Vectors = vectors
 				};		
-				obj.Position.Down(100);
+				obj.Position.Down(500);
 				var multiplier = rows * 100 + offset;
 				obj.Position.Right(multiplier);
 				offset += 200;
