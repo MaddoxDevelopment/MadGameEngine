@@ -22,13 +22,14 @@ namespace GameEngine
 	internal class Test : GameWindow
 	{
 		private Vector2[][] buffer;
+
 		private readonly Dictionary<int, Tuple<float, float>> location = new Dictionary<int, Tuple<float, float>>
 		{
-			{0, new Tuple<float, float>(100f, 100f)},
-			{1, new Tuple<float, float>(500f, 500f)}
+			{ 0, new Tuple<float, float>(100f, 100f) },
+			{ 1, new Tuple<float, float>(500f, 500f) }
 		};
 
-		private int selectedIndex = -1;
+		private Tuple<int, Rectangle> selectedTarget;
 		private readonly int[] _vbo = new int[2]; //vertex buffer objects
 
 		public Test(int width, int height, GraphicsMode mode) : base(width, height, mode)
@@ -64,33 +65,38 @@ namespace GameEngine
 			for (var i = 0; i < buffer.Length; i++)
 			{
 				var translation = location[i];
-				var points = buffer[i].Select(w => new Point((int)((int)w.X + translation.Item1), (int)((int)w.Y + translation.Item2))).ToList();
+				var points = buffer[i].Select(w =>
+					new Point((int)((int)w.X + translation.Item1), (int)((int)w.Y + translation.Item2))).ToList();
 				var minX = points.Min(p => p.X);
 				var minY = points.Min(p => p.Y);
 				var maxX = points.Max(p => p.X);
 				var maxY = points.Max(p => p.Y);
-				var rec = new Rectangle(new Point(minX, minY), new Size(maxX-minX, maxY-minY));
+				var rec = new Rectangle(new Point(minX, minY), new Size(maxX - minX, maxY - minY));
 				Console.WriteLine("Rec: " + JsonConvert.SerializeObject(points));
 				if (!rec.Contains(e.Position)) continue;
-				selectedIndex = i;
+				selectedTarget = new Tuple<int, Rectangle>(i, rec);
 				break;
 			}
+
 			base.OnMouseDown(e);
 		}
 
 		protected override void OnMouseMove(MouseMoveEventArgs e)
 		{
-			if (selectedIndex == -1)
+			if (selectedTarget == null)
 			{
 				return;
 			}
-			location[selectedIndex] = new Tuple<float, float>(e.X, e.Y);
+			var rect = selectedTarget.Item2;
+			var halfWidth = rect.Width / 2;
+			var halfHeight = rect.Height / 2;
+			location[selectedTarget.Item1] = new Tuple<float, float>(e.X - halfHeight, e.Y - halfWidth);
 			base.OnMouseMove(e);
 		}
 
 		protected override void OnMouseUp(MouseButtonEventArgs e)
 		{
-			selectedIndex = -1;
+			selectedTarget = null;
 			base.OnMouseUp(e);
 		}
 
@@ -102,7 +108,8 @@ namespace GameEngine
 				Console.WriteLine(i + " " + _vbo[i]);
 				var b = buffer[i];
 				GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo[i]);
-				GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector2.SizeInBytes * b.Length), b, BufferUsageHint.StaticDraw);
+				GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector2.SizeInBytes * b.Length), b,
+					BufferUsageHint.StaticDraw);
 			}
 		}
 
@@ -123,7 +130,7 @@ namespace GameEngine
 
 			GL.EnableClientState(ArrayCap.VertexArray);
 			GL.Color3(Color.Aquamarine);
-			
+
 			for (var i = 0; i < _vbo.Length; i++)
 			{
 				var starting = location[i];
@@ -134,8 +141,9 @@ namespace GameEngine
 				GL.LoadMatrix(ref world);
 				GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo[i]);
 				GL.VertexPointer(2, VertexPointerType.Float, Vector2.SizeInBytes * i, 0);
-				GL.DrawArrays(PrimitiveType.Quads, 0, buffer[i].Length);	
+				GL.DrawArrays(PrimitiveType.Quads, 0, buffer[i].Length);
 			}
+
 			this.SwapBuffers();
 		}
 	}
