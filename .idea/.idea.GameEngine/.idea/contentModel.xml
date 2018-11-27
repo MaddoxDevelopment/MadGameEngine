@@ -5,6 +5,8 @@
       <e p="GameEngine" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="GameEngine.csproj" t="IncludeRecursive" />
+        <e p="GameObject.cs" t="Include" />
+        <e p="Initializer.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.1" t="Include">
@@ -13,6 +15,7 @@
           </e>
         </e>
         <e p="Program.cs" t="Include" />
+        <e p="Renderer.cs" t="Include" />
       </e>
       <e p="GameEngine.sln" t="IncludeFlat" />
       <e p="packages" t="ExcludeRecursive" />
