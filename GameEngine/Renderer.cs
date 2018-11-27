@@ -10,9 +10,16 @@ namespace GameEngine
 	{
 		private readonly Dictionary<int, GameObject> _objects;
 		private readonly int objectCount;
-		private Vector2[][] _vectors;
+		private readonly Vector2[][] _vectors;
 		private readonly int[] _vbo;
 		private readonly GameWindow window;
+
+		protected virtual void OnObjectRendered(int index, GameObject obj)
+		{
+			
+		}
+
+		public Dictionary<int, GameObject> ObjectMap => _objects;
 
 		public Renderer(GameWindow window, IList<GameObject> objects)
 		{
@@ -28,6 +35,11 @@ namespace GameEngine
 				_vectors[i] = gameObject.Vectors;
 				gameObject.Vectors = new Vector2[0];
 			}
+		}
+
+		public void UpdateGameObject(int index, GameObject gameObject)
+		{
+			_objects[index] = gameObject;
 		}
 
 		public void Setup()
@@ -59,10 +71,12 @@ namespace GameEngine
 
 			for (var i = 0; i < _vbo.Length; i++)
 			{
-				var starting = _objects[i];
-				world = Matrix4.CreateTranslation(starting.Position.X, starting.Position.Y, 0);
+				var gameObject = _objects[i];
+				world = Matrix4.CreateTranslation(gameObject.Position.X, gameObject.Position.Y, 0);
 				var extracted = world.ExtractTranslation();
-				_objects[i].Position.Set(extracted.X, extracted.Y);
+				gameObject.Position.Set(extracted.X, extracted.Y);
+				UpdateGameObject(i, gameObject);
+				OnObjectRendered(i, gameObject);
 				GL.MatrixMode(MatrixMode.Modelview);
 				GL.LoadMatrix(ref world);
 				GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo[i]);

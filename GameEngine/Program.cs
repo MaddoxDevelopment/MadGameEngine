@@ -31,7 +31,7 @@ namespace GameEngine
 		protected override void OnLoad(EventArgs e)
 		{		
 			base.OnLoad(e);
-			_renderer = new Renderer(this, Initializer.BuildGameObjects(this));
+			_renderer = new WorldRenderer(this, Initializer.BuildGameObjects(this));
 			_renderer.Setup();
 		}
 
