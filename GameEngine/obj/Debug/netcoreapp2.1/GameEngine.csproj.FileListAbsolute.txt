@@ -1,0 +1,11 @@
+/Users/maddox/Documents/GameDev/GameEngine/GameEngine/bin/Debug/netcoreapp2.1/GameEngine.deps.json
+/Users/maddox/Documents/GameDev/GameEngine/GameEngine/bin/Debug/netcoreapp2.1/GameEngine.runtimeconfig.json
+/Users/maddox/Documents/GameDev/GameEngine/GameEngine/bin/Debug/netcoreapp2.1/GameEngine.runtimeconfig.dev.json
+/Users/maddox/Documents/GameDev/GameEngine/GameEngine/bin/Debug/netcoreapp2.1/GameEngine.dll
+/Users/maddox/Documents/GameDev/GameEngine/GameEngine/bin/Debug/netcoreapp2.1/GameEngine.pdb
+/Users/maddox/Documents/GameDev/GameEngine/GameEngine/obj/Debug/netcoreapp2.1/GameEngine.csprojAssemblyReference.cache
+/Users/maddox/Documents/GameDev/GameEngine/GameEngine/obj/Debug/netcoreapp2.1/GameEngine.csproj.CoreCompileInputs.cache
+/Users/maddox/Documents/GameDev/GameEngine/GameEngine/obj/Debug/netcoreapp2.1/GameEngine.AssemblyInfoInputs.cache
+/Users/maddox/Documents/GameDev/GameEngine/GameEngine/obj/Debug/netcoreapp2.1/GameEngine.AssemblyInfo.cs
+/Users/maddox/Documents/GameDev/GameEngine/GameEngine/obj/Debug/netcoreapp2.1/GameEngine.dll
+/Users/maddox/Documents/GameDev/GameEngine/GameEngine/obj/Debug/netcoreapp2.1/GameEngine.pdb
