@@ -12,9 +12,9 @@ namespace GameEngine
 		private bool isDropping;
 		private bool clearedAnimTimer;
 		private double animTimer;
-		private GameObjectPosition original;
+		private Position original;
 		
-		public WorldRenderer(GameWindow window, IList<GameObject> objects) : base(window, objects)
+		public WorldRenderer(GameWindow window, IList<Entity> entities) : base(window, entities)
 		{
 			window.KeyDown += (sender, args) =>
 			{
@@ -25,23 +25,19 @@ namespace GameEngine
 			};
 		}
 
-		protected override void OnObjectRendered(int index, GameObject obj)
-		{
-		}
-
 		public override void OnFrameUpdate(FrameEventArgs e)
 		{
 			if (animating && !clearedAnimTimer)
 			{
-				var obj = ObjectMap[0];
-				original = (GameObjectPosition)obj.Position.Clone();
+				var obj = GetEntity(0);
+				original = (Position)obj.Position.Clone();
 				animTimer = 0;
 				lastNumber = -1;
 				clearedAnimTimer = true;
 			}
 			if (animating)
 			{
-				var obj = ObjectMap[0];
+				var obj = GetEntity(0);
 				if (!isDropping)
 				{
 					obj.Position.Up(60);

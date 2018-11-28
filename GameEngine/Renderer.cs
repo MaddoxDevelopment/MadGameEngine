@@ -8,49 +8,58 @@ namespace GameEngine
 {
 	public class Renderer
 	{
-		private readonly Dictionary<int, GameObject> _objects;
-		private readonly int objectCount;
+		private readonly Dictionary<int, Entity> _entities;
+		private readonly int entityCount;
 		private readonly Vector2[][] _vectors;
 		private readonly int[] _vbo;
 		private readonly GameWindow window;
 
-		protected virtual void OnObjectRendered(int index, GameObject obj)
+		protected virtual void OnEntityRendered(int index, Entity entity)
 		{
 			
 		}
-		
 		
 		public virtual void OnFrameUpdate(FrameEventArgs e)
 		{
 			
 		}
 		
-		public Dictionary<int, GameObject> ObjectMap => _objects;
+		public Dictionary<int, Entity> EntityMap => _entities;
 
-		public Renderer(GameWindow window, IList<GameObject> objects)
+		public Renderer(GameWindow window, IList<Entity> objects)
 		{
 			this.window = window;
-			_objects = new Dictionary<int, GameObject>();
-			objectCount = objects.Count;
-			_vbo = new int[objectCount];
-			_vectors = new Vector2[objectCount][];
+			_entities = new Dictionary<int, Entity>();
+			entityCount = objects.Count;
+			_vbo = new int[entityCount];
+			_vectors = new Vector2[entityCount][];
 			for (var i = 0; i < objects.Count; i++)
 			{
-				var gameObject = objects[i];
-				_objects[i] = gameObject;
-				_vectors[i] = gameObject.Vectors;
-				gameObject.Vectors = new Vector2[0];
+				var entity = objects[i];
+				_entities[i] = entity;
+				_vectors[i] = entity.Vectors.ToArray();
+				entity.Vectors = new List<Vector2>();
 			}
 		}
 
-		public void UpdateGameObject(int index, GameObject gameObject)
+		public Entity GetEntity(int index)
 		{
-			_objects[index] = gameObject;
+			return _entities[index];
+		}
+		
+		public void UpdatePosition(int index, Position position)
+		{
+			_entities[index].Position = position;
+		}
+
+		public void UpdateEntity(int index, Entity entity)
+		{
+			_entities[index] = entity;
 		}
 
 		public void Setup()
 		{
-			GL.GenBuffers(objectCount, _vbo);
+			GL.GenBuffers(entityCount, _vbo);
 			for (var i = 0; i < _vbo.Length; i++)
 			{
 				var buffer = _vectors[i];
@@ -77,12 +86,12 @@ namespace GameEngine
 
 			for (var i = 0; i < _vbo.Length; i++)
 			{
-				var gameObject = _objects[i];
-				world = Matrix4.CreateTranslation(gameObject.Position.X, gameObject.Position.Y, 0);
+				var entity = _entities[i];
+				world = Matrix4.CreateTranslation(entity.Position.X, entity.Position.Y, 0);
 				var extracted = world.ExtractTranslation();
-				gameObject.Position.Set(extracted.X, extracted.Y);
-				UpdateGameObject(i, gameObject);
-				OnObjectRendered(i, gameObject);
+				entity.Position.Set(extracted.X, extracted.Y);
+				UpdateEntity(i, entity);
+				OnEntityRendered(i, entity);
 				GL.MatrixMode(MatrixMode.Modelview);
 				GL.LoadMatrix(ref world);
 				GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo[i]);

@@ -4,6 +4,7 @@
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="GameEngine" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
+        <e p="Entity.cs" t="Include" />
         <e p="GameEngine.csproj" t="IncludeRecursive" />
         <e p="GameObject.cs" t="Include" />
         <e p="Initializer.cs" t="Include" />
@@ -14,6 +15,7 @@
             </e>
           </e>
         </e>
+        <e p="Position.cs" t="Include" />
         <e p="Program.cs" t="Include" />
         <e p="Renderer.cs" t="Include" />
         <e p="WorldRenderer.cs" t="Include" />
