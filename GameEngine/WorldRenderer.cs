@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using OpenTK;
 using OpenTK.Input;
 
@@ -22,6 +23,14 @@ namespace GameEngine
 				{
 					animating = true;
 				}
+
+				if (args.Key == Key.A)
+				{
+					var index = EntityMap.Keys.First();
+					var vectors = GetVectors(index);
+					vectors.Add(new Vector2(200, 400));
+					UpdateVectors(index, vectors);
+				}
 			};
 		}
 
@@ -29,7 +38,7 @@ namespace GameEngine
 		{
 			if (animating && !clearedAnimTimer)
 			{
-				var obj = GetEntity(0);
+				var obj = GetEntity(EntityMap.Keys.First());
 				original = (Position)obj.Position.Clone();
 				animTimer = 0;
 				lastNumber = -1;
@@ -37,7 +46,7 @@ namespace GameEngine
 			}
 			if (animating)
 			{
-				var obj = GetEntity(0);
+				var obj = GetEntity(EntityMap.Keys.First());
 				if (!isDropping)
 				{
 					obj.Position.Up(60);
