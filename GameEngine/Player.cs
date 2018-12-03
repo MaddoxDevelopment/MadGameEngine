@@ -57,6 +57,16 @@ namespace GameEngine
 			return Rectangle;
 		}
 
+		public bool IsCollidableWithLocalPlayer()
+		{
+			return !IsLocalPlayer;
+		}
+
+		public void OnCollision(ICollisionable source)
+		{
+			throw new NotImplementedException();
+		}
+
 		public string Name()
 		{
 			return _name;
@@ -64,6 +74,11 @@ namespace GameEngine
 
 		public void Move()
 		{
+			if (!_game.Focused)
+			{
+				return;
+			}
+	
 			var state = Keyboard.GetState(0);
 
 			if (!_movementKeys.Any(w => state.IsKeyDown(w))) return;
@@ -89,7 +104,7 @@ namespace GameEngine
 
 		public bool CheckCollision(RectangleF rectangle)
 		{
-			foreach (var entity in _game.Collisionables.Where(w => w != this))
+			foreach (var entity in _game.Collisionables.Keys.Where(w => w != this && w.IsCollidableWithLocalPlayer()))
 			{
 				var bounds = entity.GetBounds();
 				if (!Collisions.IsColliding(rectangle, bounds))

@@ -1,6 +1,6 @@
 namespace GameEngine.Base
 {
-	public interface INpc : ILocatable, ICollisionable, INameable
+	public interface INpc : ILocatable, ICollisionable, INameable, IUpdateable
 	{
 	}
 }

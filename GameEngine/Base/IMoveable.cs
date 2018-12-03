@@ -1,6 +1,6 @@
 namespace GameEngine.Base
 {
-	public interface IMoveable
+	public interface IMoveable : ILocatable
 	{
 		Direction Direction { get; set; }
 		void Move();

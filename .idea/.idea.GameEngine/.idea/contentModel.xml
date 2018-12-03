@@ -10,18 +10,22 @@
           <e p="INameable.cs" t="Include" />
           <e p="INpc.cs" t="Include" />
           <e p="IPlayer.cs" t="Include" />
+          <e p="IRemovable.cs" t="Include" />
           <e p="IRenderable.cs" t="Include" />
           <e p="IUpdateable.cs" t="Include" />
         </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="Content" t="Include">
+          <e p="alienBlue_duck.png" t="Include" />
           <e p="alienBlue_front.png" t="Include" />
+          <e p="onfire_0001.png" t="Include" />
           <e p="slimeBlock.png" t="Include" />
           <e p="slimeBlock_dead.png" t="Include" />
           <e p="slimeBlock_move.png" t="Include" />
         </e>
         <e p="Game.cs" t="Include" />
         <e p="GameEngine.csproj" t="IncludeRecursive" />
+        <e p="KeyTest.cs" t="Include" />
         <e p="Npc.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -36,6 +40,7 @@
         <e p="Player.cs" t="Include" />
         <e p="Position.cs" t="Include" />
         <e p="Program.cs" t="Include" />
+        <e p="Projectile.cs" t="Include" />
         <e p="Sprite" t="Include" />
         <e p="Sprite.cs" t="Include" />
         <e p="SpriteLoader.cs" t="Include" />
