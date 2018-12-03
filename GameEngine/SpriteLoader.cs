@@ -15,7 +15,8 @@ namespace GameEngine
 			BitmapData data = null;
 			try
 			{
-				data = source.LockBits(new Rectangle(0, 0, source.Width, source.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+				data = source.LockBits(new Rectangle(0, 0, source.Width, source.Height), ImageLockMode.ReadOnly,
+					PixelFormat.Format32bppArgb);
 				var buffer = new byte[data.Height * data.Stride];
 				Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
 				var xMin = int.MaxValue;
@@ -23,21 +24,17 @@ namespace GameEngine
 				var yMin = int.MaxValue;
 				var yMax = 0;
 				for (var y = 0; y < data.Height; y++)
+				for (var x = 0; x < data.Width; x++)
 				{
-					for (var x = 0; x < data.Width; x++)
-					{
-						var alpha = buffer[y * data.Stride + 4 * x + 3];
-						if (alpha == 0) continue;
-						if (x < xMin) xMin = x;
-						if (x > xMax) xMax = x;
-						if (y < yMin) yMin = y;
-						if (y > yMax) yMax = y;
-					}
+					var alpha = buffer[y * data.Stride + 4 * x + 3];
+					if (alpha == 0) continue;
+					if (x < xMin) xMin = x;
+					if (x > xMax) xMax = x;
+					if (y < yMin) yMin = y;
+					if (y > yMax) yMax = y;
 				}
-				if (xMax < xMin || yMax < yMin)
-				{
-					return null;
-				}
+
+				if (xMax < xMin || yMax < yMin) return null;
 				srcRect = Rectangle.FromLTRB(xMin, yMin, xMax, yMax);
 			}
 			finally
@@ -45,15 +42,17 @@ namespace GameEngine
 				if (data != null)
 					source.UnlockBits(data);
 			}
+
 			var dest = new Bitmap(srcRect.Width, srcRect.Height);
 			var destRect = new Rectangle(0, 0, srcRect.Width, srcRect.Height);
 			using (var graphics = Graphics.FromImage(dest))
 			{
 				graphics.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
 			}
+
 			return dest;
 		}
-		
+
 		public static Texture2D LoadTexture(string filePath)
 		{
 			if (!File.Exists("Content/" + filePath))

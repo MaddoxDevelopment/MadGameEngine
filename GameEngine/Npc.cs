@@ -7,8 +7,8 @@ namespace GameEngine
 {
 	public class Npc : INpc
 	{
-		private readonly Vector2 _size;
 		private readonly string _name;
+		private readonly Vector2 _size;
 
 		public Npc(string name, Vector2 startPos)
 		{
@@ -36,8 +36,11 @@ namespace GameEngine
 
 		public ICollisionable CollidingWith { get; set; }
 
-		public RectangleF GetBounds() => Rectangle;
-		
+		public RectangleF GetBounds()
+		{
+			return Rectangle;
+		}
+
 		public string Name()
 		{
 			return _name;

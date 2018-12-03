@@ -11,12 +11,10 @@ namespace GameEngine
 	public class Game : GameWindow
 	{
 		public static readonly int GridSize = 48;
-		
-		public IPlayer LocalPlayer { get; set; }
 		public readonly View View;
 
 		public List<ICollisionable> Collisionables;
-		
+
 		public Game(float scale = 2.0f) : base(1280, 720)
 		{
 			GL.Enable(EnableCap.Texture2D);
@@ -24,6 +22,8 @@ namespace GameEngine
 			GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 			View = new View(Vector2.Zero, scale);
 		}
+
+		public IPlayer LocalPlayer { get; set; }
 
 		protected override void OnLoad(EventArgs e)
 		{

@@ -6,12 +6,9 @@ namespace GameEngine
 {
 	public class View : IUpdateable
 	{
-		public Position Position { get; set; }
-		public double Rotation { get; set; }
-		public float Zoom { get; set; }
+		private float _currentStep;
 
 		private float _tweenSteps;
-		private float _currentStep;
 
 		public View(Vector2 startPosition, float startZoom = 1f, double rotation = 0.0)
 		{
@@ -20,6 +17,10 @@ namespace GameEngine
 			Rotation = rotation;
 		}
 
+		public Position Position { get; set; }
+		public double Rotation { get; set; }
+		public float Zoom { get; set; }
+
 		public void Update()
 		{
 			if (_currentStep >= _tweenSteps)
@@ -27,13 +28,17 @@ namespace GameEngine
 				Position.Current = Position.Destination;
 				return;
 			}
+
 			_currentStep++;
 			Position.Current = Position.Current + (Position.Destination - Position.Current) *
-			                  QuarticOut(_currentStep / _tweenSteps);
+			                   QuarticOut(_currentStep / _tweenSteps);
 		}
 
-		private float QuarticOut(float t) => -((t - 1) * (t - 1) * (t - 1) * (t - 1)) + 1;
-		
+		private float QuarticOut(float t)
+		{
+			return -((t - 1) * (t - 1) * (t - 1) * (t - 1)) + 1;
+		}
+
 		public void SetPosition(Vector2 position, int steps = 15)
 		{
 			if (Position.Current == position)
