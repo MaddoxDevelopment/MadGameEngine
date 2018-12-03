@@ -3,11 +3,26 @@
   <component name="ContentModelStore">
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="GameEngine" t="IncludeRecursive">
+        <e p="Base" t="Include">
+          <e p="ICollisionable.cs" t="Include" />
+          <e p="ILocatable.cs" t="Include" />
+          <e p="IMoveable.cs" t="Include" />
+          <e p="INameable.cs" t="Include" />
+          <e p="INpc.cs" t="Include" />
+          <e p="IPlayer.cs" t="Include" />
+          <e p="IRenderable.cs" t="Include" />
+          <e p="IUpdateable.cs" t="Include" />
+        </e>
         <e p="bin" t="ExcludeRecursive" />
-        <e p="Entity.cs" t="Include" />
+        <e p="Content" t="Include">
+          <e p="alienBlue_front.png" t="Include" />
+          <e p="slimeBlock.png" t="Include" />
+          <e p="slimeBlock_dead.png" t="Include" />
+          <e p="slimeBlock_move.png" t="Include" />
+        </e>
+        <e p="Game.cs" t="Include" />
         <e p="GameEngine.csproj" t="IncludeRecursive" />
-        <e p="GameObject.cs" t="Include" />
-        <e p="Initializer.cs" t="Include" />
+        <e p="Npc.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.1" t="Include">
@@ -15,10 +30,17 @@
             </e>
           </e>
         </e>
+        <e p="Physics" t="Include">
+          <e p="Collisions.cs" t="Include" />
+        </e>
+        <e p="Player.cs" t="Include" />
         <e p="Position.cs" t="Include" />
         <e p="Program.cs" t="Include" />
-        <e p="Renderer.cs" t="Include" />
-        <e p="WorldRenderer.cs" t="Include" />
+        <e p="Sprite" t="Include" />
+        <e p="Sprite.cs" t="Include" />
+        <e p="SpriteLoader.cs" t="Include" />
+        <e p="Texture2D.cs" t="Include" />
+        <e p="View.cs" t="Include" />
       </e>
       <e p="GameEngine.sln" t="IncludeFlat" />
       <e p="packages" t="ExcludeRecursive" />

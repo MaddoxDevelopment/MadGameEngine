@@ -1,19 +1,18 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "09e956c191b2f78befb0192940f2a2f408c1e382"
+    "signature": "fc18f2f5cf9af7b5ec466d99fda35f0e0cab75b6"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.1": {
-      "GameEngine/1.0.0": {
+      "GameEngineTest/1.0.0": {
         "dependencies": {
           "CoreCompat.System.Drawing.v2": "5.2.0-preview1-r131",
-          "Newtonsoft.Json": "11.0.2",
           "OpenTK": "3.0.1"
         },
         "runtime": {
-          "GameEngine.dll": {}
+          "GameEngineTest.dll": {}
         }
       },
       "CoreCompat.System.Drawing.v2/5.2.0-preview1-r131": {
@@ -24,14 +23,6 @@
           "lib/netstandard2.0/CoreCompat.System.Drawing.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "Newtonsoft.Json/11.0.2": {
-        "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "assemblyVersion": "11.0.0.0",
-            "fileVersion": "11.0.2.21924"
           }
         }
       },
@@ -84,7 +75,7 @@
     }
   },
   "libraries": {
-    "GameEngine/1.0.0": {
+    "GameEngineTest/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -95,13 +86,6 @@
       "sha512": "sha512-WJKqJA/jrihuJBV+pU4pgJBdK+UBJ57MXgrHxugaqXka6c79/nI9iTrbysNiAE59RnGKN7Ff7FDVVmqN5fjgKA==",
       "path": "corecompat.system.drawing.v2/5.2.0-preview1-r131",
       "hashPath": "corecompat.system.drawing.v2.5.2.0-preview1-r131.nupkg.sha512"
-    },
-    "Newtonsoft.Json/11.0.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-znZGbws7E4BA9jxNZ7FuiIRI3C9hrgatVQSTKhIYZYNOud4M5VfGlTYi6RdYO5sQrebFuF/g9UEV3hOxDMXF6Q==",
-      "path": "newtonsoft.json/11.0.2",
-      "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
     },
     "OpenTK/3.0.1": {
       "type": "package",

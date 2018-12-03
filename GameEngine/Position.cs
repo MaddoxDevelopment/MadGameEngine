@@ -1,43 +1,45 @@
-﻿using System;
+using OpenTK;
 
 namespace GameEngine
 {
-	public class Position : ICloneable
+	public class Position
 	{
-		public float X { get; private set; }
-		public float Y { get; private set; }
+		public Vector2 Current { get; set; }
+		public Vector2 Destination { get; set; }
 
-		public Position()
+		public bool AtDestination => Current == Destination;
+
+		public void Set(int x, int y)
 		{
-			X = 0;
-			Y = 0;
+			Destination = new Vector2(x, y);
 		}
 
-		public void Set(float x, float y)
-		{
-			X = x;
-			Y = y;
-		}
+		public void AddX(int x) => Current = new Vector2(Current.X + x, Current.Y);
+		public void SubtractX(int x) => Current = new Vector2(Current.X - x, Current.Y);
+		public void AddY(int y) => Current = new Vector2(Current.X, Current.Y + y);
+		public void SubtractY(int y) => Current = new Vector2(Current.X, Current.Y - y);
 		
-		public void Left(float x) => X -= x;
-		public void Right(float x) => X += x;
-		public void Up(float y) => Y -= y;
-		public void Down(float y) => Y += y;
-
-		public override bool Equals(object obj)
+		public Position ToWorld(View view)
 		{
-			if (obj is Position casted)
+			Current /= view.Zoom;
+			var dX = new Vector2((float)System.Math.Cos(view.Rotation), (float)System.Math.Sin(view.Rotation));
+			var dY = new Vector2(
+				(float)System.Math.Cos(view.Rotation + System.Math.PI / 2.0),
+				(float)System.Math.Sin(view.Rotation + System.Math.PI / 2.0));
+			return new Position
 			{
-				var x = (int)casted.X;
-				var y = (int)casted.Y;
-				return x == (int)X && y == (int)Y;
-			}
-			return false;
+				Current = Current + (dX * Current.X + dY * Current.Y)
+			};
 		}
 
-		public object Clone()
+		public static Position FromPosition(Position position)
 		{
-			return MemberwiseClone();
+			return new Position { Current = position.Current, Destination = position.Destination };
+		}
+
+		public override string ToString()
+		{
+			return Current.ToString();
 		}
 	}
 }
