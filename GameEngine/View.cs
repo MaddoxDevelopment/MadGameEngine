@@ -4,49 +4,29 @@ using OpenTK.Graphics.OpenGL;
 
 namespace GameEngine
 {
-	public class View : IUpdateable
+	public class View : IUpdateable, IMoveable
 	{
-		private float _currentStep;
-
-		private float _tweenSteps;
-
+		private static View _instance;
+		
+		public static View Get()
+		{
+			return _instance;
+		}
+		
+		private readonly Movement.TweenMovement _tweenMovement;
+		
 		public View(Vector2 startPosition, float startZoom = 1f, double rotation = 0.0)
 		{
 			Position = new Position { Current = startPosition, Destination = startPosition };
 			Zoom = startZoom;
 			Rotation = rotation;
+			_tweenMovement = new Movement.TweenMovement(this);
+			_instance = this;
 		}
 
 		public Position Position { get; set; }
 		public double Rotation { get; set; }
 		public float Zoom { get; set; }
-
-		public void Update()
-		{
-			if (_currentStep >= _tweenSteps)
-			{
-				Position.Current = Position.Destination;
-				return;
-			}
-
-			_currentStep++;
-			Position.Current = Position.Current + (Position.Destination - Position.Current) *
-			                   QuarticOut(_currentStep / _tweenSteps);
-		}
-
-		private float QuarticOut(float t)
-		{
-			return -((t - 1) * (t - 1) * (t - 1) * (t - 1)) + 1;
-		}
-
-		public void SetPosition(Vector2 position, int steps = 15)
-		{
-			if (Position.Current == position)
-				return;
-			Position.Destination = position;
-			_currentStep = 0;
-			_tweenSteps = steps;
-		}
 
 		public void ApplyMatrix()
 		{
@@ -55,6 +35,23 @@ namespace GameEngine
 			transform = Matrix4.Mult(transform, Matrix4.CreateRotationZ(-(float)Rotation));
 			transform = Matrix4.Mult(transform, Matrix4.CreateScale(Zoom, Zoom, 1.0f));
 			GL.MultMatrix(ref transform);
+		}
+
+		public Direction Direction { get; set; }
+
+		public void SetPosition(Vector2 position)
+		{
+			_tweenMovement.SetPosition(position);
+		}
+		
+		public void Move()
+		{
+			_tweenMovement.Step();	
+		}
+
+		public void Update()
+		{
+			Move();
 		}
 	}
 }

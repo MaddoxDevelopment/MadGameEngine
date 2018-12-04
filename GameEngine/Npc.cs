@@ -2,26 +2,34 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using GameEngine.Base;
+using GameEngine.Movement;
 using OpenTK;
 
 namespace GameEngine
 {
 	public class Npc : INpc
 	{
+		private readonly Game _game;
 		private readonly string _name;
 		private Vector2 _size;
 		private Texture2D _sprite;
 		private Stopwatch animationWatch;
+		private Position startPosition;
+		private TweenMovement _movement;
+		private bool isReturningToStart;
 
-		public Npc(string name, Vector2 startPos)
+		public Npc(Game game, string name, Vector2 startPos)
 		{
+			_game = game;
 			_name = name;
 			Position = new Position { Current = startPos, Destination = startPos };
+			startPosition = Position.FromPosition(Position);
 			Sprite = SpriteLoader.LoadTexture("alienBlue_front.png");
 			SpriteDuck = SpriteLoader.LoadTexture("alienBlue_duck.png");
 			_size = new Vector2(Sprite.Width / 2f, Sprite.Height / 2f);
 			_sprite = Sprite;
-			Console.WriteLine(Sprite.Height + " " + Sprite.Width);
+			_movement = new TweenMovement(this);
+			_movement.SetPosition(startPosition.Current);
 		}
 
 		private RectangleF Rectangle =>
@@ -47,7 +55,7 @@ namespace GameEngine
 			return Rectangle;
 		}
 
-		public bool IsCollidableWithLocalPlayer()
+		public bool CanCollideLocalPlayer()
 		{
 			return true;
 		}
@@ -74,6 +82,33 @@ namespace GameEngine
 			_sprite = Sprite;
 			_size = new Vector2(Sprite.Width / 2f, Sprite.Height / 2f);
 			animationWatch.Stop();
+		}
+
+		public Direction Direction { get; set; }
+		
+		public void Move()
+		{
+
+			if (isReturningToStart && Position.Current != startPosition.Current)
+			{
+				Position.AddX(10);
+			}
+
+			if (isReturningToStart && Position.Current == startPosition.Current)
+			{
+				isReturningToStart = false;
+			}
+			
+			if (!isReturningToStart)
+			{
+				Position.SubtractX(10);
+			}
+
+
+			if (!isReturningToStart && Position.Current.X < -800)
+			{
+				isReturningToStart = true;
+			}
 		}
 	}
 }

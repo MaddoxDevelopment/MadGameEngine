@@ -26,6 +26,9 @@
         <e p="Game.cs" t="Include" />
         <e p="GameEngine.csproj" t="IncludeRecursive" />
         <e p="KeyTest.cs" t="Include" />
+        <e p="Movement" t="Include">
+          <e p="TweenMovement.cs" t="Include" />
+        </e>
         <e p="Npc.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -41,6 +44,7 @@
         <e p="Position.cs" t="Include" />
         <e p="Program.cs" t="Include" />
         <e p="Projectile.cs" t="Include" />
+        <e p="ProjectileOptions.cs" t="Include" />
         <e p="Sprite" t="Include" />
         <e p="Sprite.cs" t="Include" />
         <e p="SpriteLoader.cs" t="Include" />

@@ -12,7 +12,7 @@ namespace GameEngine
 
 		public void Set(int x, int y)
 		{
-			Destination = new Vector2(x, y);
+			Current = new Vector2(x, y);
 		}
 
 		public void AddX(int x)

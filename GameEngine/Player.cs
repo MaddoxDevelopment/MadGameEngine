@@ -27,7 +27,6 @@ namespace GameEngine
 			_name = name;
 			Position = new Position { Current = startPosition, Destination = startPosition };
 			Sprite = SpriteLoader.LoadTexture("slimeBlock.png");
-			Console.WriteLine(Sprite.Height + " " + Sprite.Width);
 			_size = new Vector2(Sprite.Width / 2f, Sprite.Height / 2f);
 			IsLocalPlayer = isLocalPlayer;
 		}
@@ -57,7 +56,7 @@ namespace GameEngine
 			return Rectangle;
 		}
 
-		public bool IsCollidableWithLocalPlayer()
+		public bool CanCollideLocalPlayer()
 		{
 			return !IsLocalPlayer;
 		}
@@ -104,7 +103,7 @@ namespace GameEngine
 
 		public bool CheckCollision(RectangleF rectangle)
 		{
-			foreach (var entity in _game.Collisionables.Keys.Where(w => w != this && w.IsCollidableWithLocalPlayer()))
+			foreach (var entity in _game.Collisionables.Keys.Where(w => w != this && w.CanCollideLocalPlayer()))
 			{
 				var bounds = entity.GetBounds();
 				if (!Collisions.IsColliding(rectangle, bounds))

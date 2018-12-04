@@ -16,7 +16,7 @@ namespace GameEngine
 
 		public ConcurrentDictionary<ICollisionable, byte> Collisionables;
 
-		public Game(float scale = 2.0f) : base(1280, 720)
+		public Game(float scale = 2.0f) : base(1650, 1050)
 		{
 			GL.Enable(EnableCap.Texture2D);
 			GL.Enable(EnableCap.Blend);
@@ -31,7 +31,10 @@ namespace GameEngine
 			LocalPlayer = new Player(this, "Local Player", new Vector2(), true);
 			Collisionables = new ConcurrentDictionary<ICollisionable, byte>();
 			Collisionables[LocalPlayer] = 0;
-			Collisionables[new Npc("Alien", new Vector2(50, 50))] = 0;
+			Collisionables[new Npc(this, "Alien", new Vector2(50, 50))] = 0;
+			Collisionables[new Npc(this, "Alien", new Vector2(150, 50))] = 0;
+			Collisionables[new Npc(this, "Alien", new Vector2(250, 50))] = 0;
+
 			new KeyTest(this);
 			base.OnLoad(e);
 		}

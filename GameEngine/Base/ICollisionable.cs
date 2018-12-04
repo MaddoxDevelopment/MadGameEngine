@@ -7,7 +7,9 @@ namespace GameEngine.Base
 		ICollisionable CollidingWith { get; set; }
 		bool CheckCollision();
 		RectangleF GetBounds();
-		bool IsCollidableWithLocalPlayer();
+		bool CanCollideLocalPlayer();
 		void OnCollision(ICollisionable source);
 	}
+
+	public interface ICollisionableLocatable : ICollisionable, ILocatable {}
 }
