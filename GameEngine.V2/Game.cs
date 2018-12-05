@@ -42,7 +42,6 @@ namespace GameEngine.V2
 			base.OnUpdateFrame(e);
 		}
 
-		
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);

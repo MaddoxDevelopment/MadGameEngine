@@ -16,7 +16,7 @@ namespace GameEngine.V2.Debug
 		{
 			_game = game;
 			_mousePosition = new Point();
-			_writer = new DelayedTextWriter(Font, textUpdateRateMillis);
+			_writer = new DelayedTextWriter(Font);
 		}
 
 		public void Initialize()
@@ -27,13 +27,13 @@ namespace GameEngine.V2.Debug
 		public void Run(string customText)
 		{
 			var x = 0;
-			_writer.WriteTextDelayed("mousePos", "Mouse: " + _mousePosition, Vector2.One);
+			_writer.WriteTextDelayed("mousePos", "Mouse: " + _mousePosition, Vector2.One, 350);
 			x += 50;
 			_writer.WriteTextDelayed("fps", "FPS: " + (_game.RenderFrequency / 1)
-			                              .ToString(CultureInfo.InvariantCulture), new Vector2(0, x));
+			                              .ToString(CultureInfo.InvariantCulture), new Vector2(0, x), 1000);
 			x += 50;
 			_writer.WriteTextDelayed("ups", "UPS: " + (_game.UpdateFrequency / 1)
-			                              .ToString(CultureInfo.InvariantCulture), new Vector2(0, x));
+			                              .ToString(CultureInfo.InvariantCulture), new Vector2(0, x), 1000);
 			x += 50;
 			_writer.WriteTextDelayed("custom", customText, new Vector2(0, x));
 		}

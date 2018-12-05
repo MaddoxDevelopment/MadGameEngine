@@ -17,7 +17,7 @@ namespace GameEngine.V2.Text
 
 		private readonly EventScheduler _scheduler;
 
-		public DelayedTextWriter(Font font, long timeToWait)
+		public DelayedTextWriter(Font font, long timeToWait = 500)
 		{
 			_font = font;
 			_timeToWait = timeToWait;
@@ -25,9 +25,9 @@ namespace GameEngine.V2.Text
 			_map = new Dictionary<string, Tuple<string, long, Vector2, List<Texture2D>>>();
 		}
 
-		public void WriteTextDelayed(string id, string text, Vector2 position)
+		public void WriteTextDelayed(string id, string text, Vector2 position, long timeToWait = 500)
 		{
-			_scheduler.ExecuteRecurring(id, _timeToWait, 0, () =>
+			_scheduler.ExecuteRecurring(id, _timeToWait == 500 && timeToWait == _timeToWait ? _timeToWait : timeToWait, 0, () =>
 			{
 				_map[id] = new Tuple<string, long, Vector2, List<Texture2D>>
 					(text, GetMillis, position, TextWriter.LoadText(_font, text));
