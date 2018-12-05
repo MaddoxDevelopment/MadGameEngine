@@ -6,7 +6,7 @@ using OpenTK;
 
 namespace GameEngine.V2.Text
 {
-	public class DelayedTextWriter
+	public class DelayedTextWriter : IDisposable
 	{
 		private readonly Dictionary<string, Tuple<string, long, Vector2, List<Texture2D>>> _map;
 		
@@ -15,18 +15,19 @@ namespace GameEngine.V2.Text
 		private readonly Font _font;
 		private readonly long _timeToWait;
 
-		private readonly EventScheduler scheduler = new EventScheduler();
+		private readonly EventScheduler _scheduler;
 
 		public DelayedTextWriter(Font font, long timeToWait)
 		{
 			_font = font;
 			_timeToWait = timeToWait;
+			_scheduler = new EventScheduler();
 			_map = new Dictionary<string, Tuple<string, long, Vector2, List<Texture2D>>>();
 		}
 
 		public void WriteTextDelayed(string id, string text, Vector2 position)
 		{
-			scheduler.ExecuteAndReplace(id, _timeToWait, 0, () =>
+			_scheduler.ExecuteRecurring(id, _timeToWait, 0, () =>
 			{
 				_map[id] = new Tuple<string, long, Vector2, List<Texture2D>>
 					(text, GetMillis, position, TextWriter.LoadText(_font, text));
@@ -34,6 +35,12 @@ namespace GameEngine.V2.Text
 			if (!_map.ContainsKey(id)) return;
 			var values = _map[id];
 			TextWriter.PrintText(values.Item4, values.Item3);
+		}
+
+		public void Dispose()
+		{
+			_font?.Dispose();
+			_scheduler?.Dispose();
 		}
 	}
 }

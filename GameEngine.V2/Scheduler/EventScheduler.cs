@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GameEngine.V2.Scheduler
 {
-	public class EventScheduler
+	public class EventScheduler : IDisposable
 	{
 		private readonly Dictionary<string, GameEvent> _events;
 
@@ -22,7 +22,7 @@ namespace GameEngine.V2.Scheduler
 			_events.Remove(id);
 		}
 		
-		public void ExecuteAndReplace(string id, long timeToWait, long initialDelay, Action action)
+		public void ExecuteRecurring(string id, long timeToWait, long initialDelay, Action action)
 		{
 			if (!_events.ContainsKey(id))
 			{
@@ -49,6 +49,11 @@ namespace GameEngine.V2.Scheduler
 			e.action = action;
 			e.dateAdded = GetMillis;
 			_events[id] = e;
+		}
+
+		public void Dispose()
+		{
+			_events.Clear();
 		}
 	}
 
