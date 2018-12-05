@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Linq;
 using OpenTK;
 
-namespace GameEngine.V2
+namespace GameEngine.V2.Text
 {
-	public class TextRender
+	public class TextWriter
 	{
 		private static Dictionary<char, Dictionary<Font, Bitmap>> cache = new Dictionary<char, Dictionary<Font, Bitmap>>();
 		
@@ -16,7 +16,7 @@ namespace GameEngine.V2
 				.ToList();
 		}
 
-		public static void PrintText(List<Texture2D> textures, Vector2 position)
+		public static void PrintText(IEnumerable<Texture2D> textures, Vector2 position)
 		{
 			foreach (var t in textures)
 			{

@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using GameEngine.V2.Debug;
+using GameEngine.V2.Scheduler;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -14,7 +15,15 @@ namespace GameEngine.V2
 			
 		}
 
-		private GameDebugger _debugger;
+		readonly EventScheduler scheduler = new EventScheduler();
+
+
+		protected override void OnTick()
+		{
+			
+		}
+
+		private readonly GameDebugger _debugger;
 		
 		protected override void OnRenderFrame(FrameEventArgs e)
 		{
@@ -39,7 +48,8 @@ namespace GameEngine.V2
 			base.OnLoad(e);
 		}
 
-		public Game(int width, int height, GraphicsMode mode, string title, long serverTickRateMillis) : base(width, height, mode, title, serverTickRateMillis)
+		public Game(int width, int height, GraphicsMode mode, string title, long tickRateMillis, long serverTickRateMillis) 
+			: base(width, height, mode, title, tickRateMillis, serverTickRateMillis)
 		{
 			GL.Enable(EnableCap.Texture2D);
 			GL.Enable(EnableCap.Blend);

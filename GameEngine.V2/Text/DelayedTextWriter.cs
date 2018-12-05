@@ -1,18 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using GameEngine.V2.Scheduler;
 using OpenTK;
 
-namespace GameEngine.V2
+namespace GameEngine.V2.Text
 {
 	public class DelayedTextWriter
 	{
 		private readonly Dictionary<string, Tuple<string, long, Vector2, List<Texture2D>>> _map;
 		
-		private long GetMillis => DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+		private static long GetMillis => DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 
 		private readonly Font _font;
 		private readonly long _timeToWait;
+
+		private readonly EventScheduler scheduler = new EventScheduler();
 
 		public DelayedTextWriter(Font font, long timeToWait)
 		{
@@ -23,19 +26,14 @@ namespace GameEngine.V2
 
 		public void WriteTextDelayed(string id, string text, Vector2 position)
 		{
-			if (!_map.ContainsKey(id))
+			scheduler.ExecuteAndReplace(id, _timeToWait, 0, () =>
 			{
 				_map[id] = new Tuple<string, long, Vector2, List<Texture2D>>
-					(text, GetMillis, position, TextRender.LoadText(_font, text));
-			}
-			
+					(text, GetMillis, position, TextWriter.LoadText(_font, text));
+			});
+			if (!_map.ContainsKey(id)) return;
 			var values = _map[id];
-			TextRender.PrintText(values.Item4, values.Item3);
-			
-			if (GetMillis - _map[id].Item2 > _timeToWait)
-			{
-				_map.Remove(id);
-			}
+			TextWriter.PrintText(values.Item4, values.Item3);
 		}
 	}
 }

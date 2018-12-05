@@ -66,7 +66,6 @@
         <e p="Debug" t="Include">
           <e p="GameDebugger.cs" t="Include" />
         </e>
-        <e p="DelayedTextWriter.cs" t="Include" />
         <e p="Game.cs" t="Include" />
         <e p="GameEngine.V2.csproj" t="IncludeRecursive" />
         <e p="Networking" t="Include">
@@ -80,12 +79,18 @@
           </e>
         </e>
         <e p="Program.cs" t="Include" />
+        <e p="Scheduler" t="Include">
+          <e p="EventScheduler.cs" t="Include" />
+        </e>
         <e p="Sprite" t="Include">
           <e p="Sprite.cs" t="Include" />
           <e p="SpriteLoader.cs" t="Include" />
           <e p="Texture2D.cs" t="Include" />
         </e>
-        <e p="TextRender.cs" t="Include" />
+        <e p="Text" t="Include">
+          <e p="DelayedTextWriter.cs" t="Include" />
+          <e p="TextWriter.cs" t="Include" />
+        </e>
       </e>
       <e p="packages" t="ExcludeRecursive" />
     </e>

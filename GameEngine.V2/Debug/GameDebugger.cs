@@ -1,21 +1,22 @@
 using System.Drawing;
 using System.Globalization;
+using GameEngine.V2.Text;
 using OpenTK;
 
 namespace GameEngine.V2.Debug
 {
 	public class GameDebugger
 	{
-		private static readonly Font _font = new Font(FontFamily.GenericMonospace, 32, FontStyle.Bold);
+		private static readonly Font Font = new Font(FontFamily.GenericMonospace, 32, FontStyle.Bold);
 		private readonly Game _game;
 		private readonly DelayedTextWriter _writer;
-		private Point _mousePosition { get; set; }
+		private Point _mousePosition;
 		
 		public GameDebugger(Game game, long textUpdateRateMillis = 500)
 		{
 			_game = game;
 			_mousePosition = new Point();
-			_writer = new DelayedTextWriter(_font, textUpdateRateMillis);
+			_writer = new DelayedTextWriter(Font, textUpdateRateMillis);
 		}
 
 		public void Initialize()

@@ -7,9 +7,8 @@ namespace GameEngine.V2
 	{
 		static void Main(string[] args)
 		{
-			var game = new Game(1650, 1050, GraphicsMode.Default, "MadGameEngine", 100);
+			var game = new Game(1650, 1050, GraphicsMode.Default, "MadGameEngine", 300, 100);
 			game.Run(60, 0);
-		
 		}
 	}
 }

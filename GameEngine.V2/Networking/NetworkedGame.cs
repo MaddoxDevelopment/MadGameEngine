@@ -10,25 +10,19 @@ namespace GameEngine.V2
 	public abstract class NetworkedGame : GameWindow
 	{
 		private readonly long _serverTickRateMillis;
+		private readonly long _tickRateMillis;
 		private readonly Stopwatch _serverTickWatch;
+		private readonly Stopwatch _tickRateWatch;
 
-		protected NetworkedGame(int width, int height, GraphicsMode mode, string title, long serverTickRateMillis)
+		protected NetworkedGame(int width, int height, GraphicsMode mode, string title, 
+			long tickRateMillis,
+			long serverTickRateMillis)
 			: base(width, height, mode, title)
 		{
 			_serverTickRateMillis = serverTickRateMillis;
+			_tickRateMillis = tickRateMillis;
 			_serverTickWatch = new Stopwatch();
-		}
-
-		private void StartServerLoop()
-		{
-			Task.Factory.StartNew(() =>
-			{
-				_serverTickWatch.Start();
-				while (true)
-				{
-					CallServerTick();
-				}
-			}, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+			_tickRateWatch = new Stopwatch();
 		}
 
 		private void CallServerTick()
@@ -40,11 +34,23 @@ namespace GameEngine.V2
 		
 		protected override void OnLoad(EventArgs e)
 		{
-			StartServerLoop();
+			_tickRateWatch.Start();
 			base.OnLoad(e);
 		}
 
+		protected override void OnUpdateFrame(FrameEventArgs e)
+		{
+			if (_tickRateWatch.ElapsedMilliseconds >= _tickRateMillis)
+			{
+				OnTick();
+				_tickRateWatch.Restart();
+			}
+			base.OnUpdateFrame(e);
+		}
+
 		protected abstract void OnServerTick();
-		
+
+		protected abstract void OnTick();
+
 	}
 }
