@@ -48,6 +48,10 @@ namespace GameEngine.Movement
 		
 		public void Step()
 		{
+			if (_moveable.Position.AtDestination)
+			{
+				return;
+			}
 			if (_currentStep >= _tweenSteps)
 			{
 				_moveable.Position.Current = _moveable.Position.Destination;

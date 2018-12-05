@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131" />
+      <PackageReference Include="OpenTK" Version="3.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="CoreCompat.System.Drawing, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\..\..\.nuget\packages\corecompat.system.drawing.v2\5.2.0-preview1-r131\lib\netstandard2.0\CoreCompat.System.Drawing.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>

@@ -57,7 +57,7 @@ namespace GameEngine
 
 		public bool CanCollideLocalPlayer()
 		{
-			return true;
+			return false;
 		}
 
 		public void OnCollision(ICollisionable source)

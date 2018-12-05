@@ -3,6 +3,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using GameEngine.Base;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -29,11 +31,13 @@ namespace GameEngine
 		protected override void OnLoad(EventArgs e)
 		{
 			LocalPlayer = new Player(this, "Local Player", new Vector2(), true);
-			Collisionables = new ConcurrentDictionary<ICollisionable, byte>();
-			Collisionables[LocalPlayer] = 0;
-			Collisionables[new Npc(this, "Alien", new Vector2(50, 50))] = 0;
-			Collisionables[new Npc(this, "Alien", new Vector2(150, 50))] = 0;
-			Collisionables[new Npc(this, "Alien", new Vector2(250, 50))] = 0;
+			Collisionables = new ConcurrentDictionary<ICollisionable, byte>
+			{
+				[LocalPlayer] = 0,
+				[new Npc(this, "Alien", new Vector2(50, 50))] = 0,
+				[new Npc(this, "Alien", new Vector2(150, 50))] = 0,
+				[new Npc(this, "Alien", new Vector2(250, 50))] = 0,
+			};
 
 			new KeyTest(this);
 			base.OnLoad(e);
@@ -42,10 +46,14 @@ namespace GameEngine
 		protected override void OnUpdateFrame(FrameEventArgs e)
 		{
 			base.OnUpdateFrame(e);
+		
+			this.Title = "MadGameEngine (Vsync: " + VSync.ToString() + ") " + " FPS: " + (1f / e.Time).ToString("0.");
+			
 			foreach (var key in Collisionables.Keys)
 			{
 				key.CheckCollision();
 			}
+			
 			Collisionables.Keys.OfType<IMoveable>().ToList().ForEach(w => w.Move());
 			View.SetPosition(LocalPlayer.Position.Current);
 			Collisionables.Keys.OfType<IUpdateable>().ToList().ForEach(w => w.Update());

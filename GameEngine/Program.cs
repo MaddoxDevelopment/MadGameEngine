@@ -5,7 +5,7 @@
 		private static void Main(string[] args)
 		{
 			var window = new Game();
-			window.Run();
+			window.Run(60, 0);
 		}
 	}
 }

@@ -52,6 +52,41 @@
         <e p="View.cs" t="Include" />
       </e>
       <e p="GameEngine.sln" t="IncludeFlat" />
+      <e p="GameEngine.V2" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Content" t="Include">
+          <e p="alienBlue_duck.png" t="Include" />
+          <e p="alienBlue_front.png" t="Include" />
+          <e p="bg.png" t="Include" />
+          <e p="onfire_0001.png" t="Include" />
+          <e p="slimeBlock.png" t="Include" />
+          <e p="slimeBlock_dead.png" t="Include" />
+          <e p="slimeBlock_move.png" t="Include" />
+        </e>
+        <e p="Debug" t="Include">
+          <e p="GameDebugger.cs" t="Include" />
+        </e>
+        <e p="DelayedTextWriter.cs" t="Include" />
+        <e p="Game.cs" t="Include" />
+        <e p="GameEngine.V2.csproj" t="IncludeRecursive" />
+        <e p="Networking" t="Include">
+          <e p="NetworkedGame.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.1" t="Include">
+              <e p="GameEngine.V2.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Sprite" t="Include">
+          <e p="Sprite.cs" t="Include" />
+          <e p="SpriteLoader.cs" t="Include" />
+          <e p="Texture2D.cs" t="Include" />
+        </e>
+        <e p="TextRender.cs" t="Include" />
+      </e>
       <e p="packages" t="ExcludeRecursive" />
     </e>
     <e p="$USER_HOME$/Library/Caches/Rider2018.2/extResources" t="IncludeRecursive" />
