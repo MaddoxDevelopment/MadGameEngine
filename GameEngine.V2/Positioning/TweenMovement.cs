@@ -1,7 +1,6 @@
-using GameEngine.V2.Positioning;
 using OpenTK;
 
-namespace GameEngine.Movement
+namespace GameEngine.V2.Positioning
 {
 	public class TweenMovement
 	{

@@ -89,8 +89,9 @@
         </e>
         <e p="Program.cs" t="Include" />
         <e p="Queue" t="Include">
-          <e p="CallbackQueue.cs" t="Include" />
-          <e p="GameQueue.cs" t="Include" />
+          <e p="Base" t="Include">
+            <e p="GameQueue.cs" t="Include" />
+          </e>
           <e p="RenderQueue.cs" t="Include" />
           <e p="UpdateQueue.cs" t="Include" />
         </e>

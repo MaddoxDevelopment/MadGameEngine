@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -49,10 +51,16 @@ namespace GameEngine.V2.Sprite
 			GL.BindTexture(TextureTarget.Texture2D, texture.Id);
 
 			GL.Begin(PrimitiveType.Quads);
+		
+			GL.MatrixMode(MatrixMode.Modelview);
+			//GL.LoadIdentity();
+
 			for (var i = 0; i < verts.Length; i++)
 			{
 				GL.Color3(color);
 
+				
+				
 				if (source == null)
 					GL.TexCoord2(verts[i].X, verts[i].Y);
 				else
@@ -60,15 +68,18 @@ namespace GameEngine.V2.Sprite
 						(source.Value.X + verts[i].X * source.Value.Width) / texture.Width,
 						(source.Value.Y + verts[i].Y * source.Value.Height) / texture.Height);
 
+				
+				
 				verts[i].X *= texture.Width;
 				verts[i].Y *= texture.Height;
 				verts[i] -= origin;
 				verts[i] *= scale;
 				verts[i] += position;
 
+				
 				GL.Vertex2(verts[i]);
 			}
-
+			
 			GL.End();
 		}
 

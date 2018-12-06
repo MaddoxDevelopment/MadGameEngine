@@ -26,11 +26,14 @@ namespace GameEngine.V2
 			
 		}
 
+
 		private readonly GameDebugger _debugger;
 		private readonly TweenCamera _camera;
-		private readonly Texture2D _block;
+		private Texture2D _block;
 		private readonly Texture2D _enemy;
 		private string _text;
+
+		private RectangleF _player => new RectangleF(_blockPosition.Current.X - _block.Width, _blockPosition.Current.Y - _block.Height, _block.Width, _block.Height);
 
 		private readonly Position _blockPosition;
 		
@@ -42,47 +45,50 @@ namespace GameEngine.V2
 			RenderQueue.Instance.Execute();
 			SwapBuffers();
 		}
-		
-		protected override void OnKeyPress(KeyPressEventArgs e)
+
+		protected override void OnKeyDown(KeyboardKeyEventArgs e)
 		{
+			if (e.Key == Key.Z)
+			{
+				_blockPosition.AddX(_block.Width);
+				_block = new Texture2D(_block.Id, -_block.Width, _block.Height);
+			}
+
+			if (e.Key == Key.X)
+			{
+				Test();
+			}
+			base.OnKeyDown(e);
+		}
+
 		
-			base.OnKeyPress(e);
+
+		private void Test()
+		{
+			RenderQueue.Instance.Enqueue(() => rotation == 90, () =>
+			{
+				if (rotation < 90)
+				{
+					rotation += 5;
+				}
+				if (rotation > 90)
+				{
+					rotation = 90;
+				}
+			}, () =>
+			{
+				
+			});
 		}
 
 		protected override void OnUpdateFrame(FrameEventArgs e)
 		{
-
-			if (this.Focused)
-			{
-				var state = Keyboard.GetState(0);
-
-				if (state.IsKeyDown(Key.W))
-					_blockPosition.SubtractY(10);
-				if (state.IsKeyDown(Key.S))
-					_blockPosition.AddY(10);
-				if (state.IsKeyDown(Key.A))
-					_blockPosition.SubtractX(10);
-				if (state.IsKeyDown(Key.D))
-					_blockPosition.AddX(10);
-			}
-
-			_camera.SetPosition(_blockPosition.Current);
-			_camera.Move();
 			UpdateQueue.Instance.Execute();
 			base.OnUpdateFrame(e);
 		}
 
-		protected override void OnLoad(EventArgs e)
-		{
-			base.OnLoad(e);
-		}
-
-		protected override void OnKeyDown(KeyboardKeyEventArgs e)
-		{
-			
-			base.OnKeyDown(e);
-		}
-
+		private int rotation = 0;
+		
 		public Game(int width, int height, GraphicsMode mode, string title, long tickRateMillis, long serverTickRateMillis) 
 			: base(width, height, mode, title, tickRateMillis, serverTickRateMillis)
 		{
@@ -99,14 +105,57 @@ namespace GameEngine.V2
 				Zoom = 1,
 				Position = new Position { Current = Vector2.One }
 			};
+			
+			UpdateQueue.Instance.Enqueue(-1, () =>
+			{
+				if (Focused)
+				{
+					var state = Keyboard.GetState(0);
+
+					if (state.IsKeyDown(Key.W))
+						_blockPosition.SubtractY(10);
+					if (state.IsKeyDown(Key.S))
+						_blockPosition.AddY(10);
+					if (state.IsKeyDown(Key.A))
+						_blockPosition.SubtractX(10);
+					if (state.IsKeyDown(Key.D))
+						_blockPosition.AddX(10);
+					if (state.IsKeyDown(Key.X))
+						rotation += 2;
+				}
+
+				_camera.SetPosition(_blockPosition.Current);
+				_camera.Move();
+			});
+			
+			_debugger.Run(() => 
+				"Player: " + _blockPosition.Current + " Rotation: " + rotation);
+
+			
 			RenderQueue.Instance.Enqueue(-1, () =>
 			{
 				Sprite.Sprite.Begin(this);
 				_camera.Render(this);
-				Sprite.Sprite.Draw(_block, _blockPosition.Current);
+		
 				Sprite.Sprite.Draw(_enemy, new Vector2(600, -90));
 			});
-			_debugger.Run(() => "Player: " + _blockPosition.Current);
+			
+			
+			
+			RenderQueue.Instance.Enqueue(-1, () =>
+			{
+				var rec = _player;
+				
+			
+				//Sprite.Sprite.Draw(_block, _player);
+				GL.Translate(rec.X, rec.Y, 0);
+				GL.Rotate(rotation, Vector3d.UnitZ);	
+				GL.Translate(-rec.X, -rec.Y, 0);
+				Sprite.Sprite.Draw(_block, _player);
+
+				GL.LoadIdentity();
+				
+			});
 		}
 	}
 }

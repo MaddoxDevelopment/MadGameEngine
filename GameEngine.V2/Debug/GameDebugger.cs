@@ -34,22 +34,24 @@ namespace GameEngine.V2.Debug
 		public void Run(Func<string> customText)
 		{
 			var texturesMouse = TextWriter.LoadText(Font, "Mouse: " + _mousePosition);
-			var queueSize = TextWriter.LoadText(Font, "RenderQ: " + RenderQueue.Instance.Count);
+			var rQueueSize = TextWriter.LoadText(Font, "RenderQ: " + RenderQueue.Instance.Count);
+			var uQueueSize = TextWriter.LoadText(Font, "UpdateQ: " + UpdateQueue.Instance.Count);
 			var textures = TextWriter.LoadText(Font, customText?.Invoke());
-			var action = new Action(() =>
+			RenderQueue.Instance.Enqueue(500, () =>
 			{
+				
 				GL.MatrixMode(MatrixMode.Projection);
 				GL.LoadIdentity();
+				GL.Rotate(0, Vector3d.UnitZ);			
 				GL.Ortho(0, _game.Width, _game.Height, 0, -1, 1);
 				TextWriter.PrintText(textures, Vector2.One);
 				TextWriter.PrintText(texturesMouse, new Vector2(0, 50));
-				TextWriter.PrintText(queueSize, new Vector2(0, 100));
-			});
-			var onCancel = new Action(() =>
+				TextWriter.PrintText(rQueueSize, new Vector2(0, 100));
+				TextWriter.PrintText(uQueueSize, new Vector2(0, 150));
+			}, () =>
 			{
 				Run(customText);
 			});
-			RenderQueue.Instance.Enqueue(500, action, onCancel);
 		}
 
 		public void Dispose()

@@ -28,6 +28,11 @@ namespace GameEngine.V2.Text
 				position.X += t.Width;
 			}
 		}
+
+		public static void PrintText(string text, Font font, Vector2 position)
+		{
+			PrintText(LoadText(font, text), position);
+		}
 		
 		private static Bitmap GetBitmapForCharacter(Font font, char c)
 		{
