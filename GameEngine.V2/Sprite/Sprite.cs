@@ -37,6 +37,16 @@ namespace GameEngine.V2.Sprite
 			Draw(texture, position, scale, color, Vector2.Zero);
 		}
 
+		public static void DrawWithRotation(int rotation, Texture2D texture, RectangleF rec)
+		{
+			GL.Translate(rec.X, rec.Y, 0);
+			GL.Rotate(rotation, Vector3d.UnitZ);	
+			GL.Translate(-rec.X, -rec.Y, 0);
+			Draw(texture, rec);
+			GL.LoadIdentity();
+		}
+		
+		
 		public static void Draw(Texture2D texture, Vector2 position, Vector2 scale, Color color, Vector2 origin,
 			RectangleF? source = null)
 		{

@@ -58,6 +58,11 @@ namespace GameEngine.V2
 			{
 				Test();
 			}
+
+			if (e.Key == Key.C)
+			{
+				rotation = 0;
+			}
 			base.OnKeyDown(e);
 		}
 
@@ -136,25 +141,14 @@ namespace GameEngine.V2
 			{
 				Sprite.Sprite.Begin(this);
 				_camera.Render(this);
-		
 				Sprite.Sprite.Draw(_enemy, new Vector2(600, -90));
 			});
 			
 			
 			
 			RenderQueue.Instance.Enqueue(-1, () =>
-			{
-				var rec = _player;
-				
-			
-				//Sprite.Sprite.Draw(_block, _player);
-				GL.Translate(rec.X, rec.Y, 0);
-				GL.Rotate(rotation, Vector3d.UnitZ);	
-				GL.Translate(-rec.X, -rec.Y, 0);
-				Sprite.Sprite.Draw(_block, _player);
-
-				GL.LoadIdentity();
-				
+			{		
+				Sprite.Sprite.DrawWithRotation(rotation, _block, _player);	
 			});
 		}
 	}
