@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 
-namespace GameEngine
+namespace GameEngine.V2.Sprite
 {
 	internal class SpriteLoader
 	{

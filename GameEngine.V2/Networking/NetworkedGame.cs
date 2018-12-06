@@ -1,11 +1,9 @@
 using System;
 using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics;
 
-namespace GameEngine.V2
+namespace GameEngine.V2.Networking
 {
 	public abstract class NetworkedGame : GameWindow
 	{

@@ -54,6 +54,9 @@
       <e p="GameEngine.sln" t="IncludeFlat" />
       <e p="GameEngine.V2" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
+        <e p="Camera" t="Include">
+          <e p="TweenCamera.cs" t="Include" />
+        </e>
         <e p="Content" t="Include">
           <e p="alienBlue_duck.png" t="Include" />
           <e p="alienBlue_front.png" t="Include" />
@@ -78,9 +81,18 @@
             </e>
           </e>
         </e>
+        <e p="Positioning" t="Include">
+          <e p="ILocatable.cs" t="Include" />
+          <e p="IMoveable.cs" t="Include" />
+          <e p="Position.cs" t="Include" />
+          <e p="TweenMovement.cs" t="Include" />
+        </e>
         <e p="Program.cs" t="Include" />
-        <e p="Scheduler" t="Include">
-          <e p="EventScheduler.cs" t="Include" />
+        <e p="Queue" t="Include">
+          <e p="CallbackQueue.cs" t="Include" />
+          <e p="GameQueue.cs" t="Include" />
+          <e p="RenderQueue.cs" t="Include" />
+          <e p="UpdateQueue.cs" t="Include" />
         </e>
         <e p="Sprite" t="Include">
           <e p="Sprite.cs" t="Include" />
@@ -88,7 +100,6 @@
           <e p="Texture2D.cs" t="Include" />
         </e>
         <e p="Text" t="Include">
-          <e p="DelayedTextWriter.cs" t="Include" />
           <e p="TextWriter.cs" t="Include" />
         </e>
       </e>

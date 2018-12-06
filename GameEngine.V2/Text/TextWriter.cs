@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using GameEngine.V2.Sprite;
 using OpenTK;
 
 namespace GameEngine.V2.Text
@@ -11,6 +13,8 @@ namespace GameEngine.V2.Text
 		
 		public static List<Texture2D> LoadText(Font font, string text)
 		{
+			if (string.IsNullOrEmpty(text))
+				return new List<Texture2D>();
 			return text.Select(t => GetBitmapForCharacter(font, t))
 				.Select(SpriteLoader.LoadTexture)
 				.ToList();
@@ -20,7 +24,7 @@ namespace GameEngine.V2.Text
 		{
 			foreach (var t in textures)
 			{
-				Sprite.Draw(t, position);
+				Sprite.Sprite.Draw(t, position);
 				position.X += t.Width;
 			}
 		}

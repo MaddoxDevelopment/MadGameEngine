@@ -1,4 +1,4 @@
-namespace GameEngine
+namespace GameEngine.V2.Sprite
 {
 	public struct Texture2D
 	{

@@ -2,7 +2,7 @@
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace GameEngine
+namespace GameEngine.V2.Sprite
 {
 	internal class Sprite
 	{

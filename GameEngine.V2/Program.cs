@@ -1,4 +1,5 @@
 ﻿using System;
+using GameEngine.V2.Queue;
 using OpenTK.Graphics;
 
 namespace GameEngine.V2
@@ -7,8 +8,8 @@ namespace GameEngine.V2
 	{
 		static void Main(string[] args)
 		{
-			var game = new Game(1650, 1050, GraphicsMode.Default, "MadGameEngine", 300, 100);
-			game.Run(60, 0);
+			var game = new Game(1280, 720, GraphicsMode.Default, "MadGameEngine", 300, 100);
+			game.Run(60, 60);
 		}
 	}
 }

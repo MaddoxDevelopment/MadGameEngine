@@ -1,42 +1,61 @@
+using System;
 using System.Drawing;
-using System.Globalization;
+using GameEngine.V2.Queue;
 using GameEngine.V2.Text;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace GameEngine.V2.Debug
 {
-	public class GameDebugger
+	public class GameDebugger : IDisposable
 	{
 		private static readonly Font Font = new Font(FontFamily.GenericMonospace, 32, FontStyle.Bold);
 		private readonly Game _game;
-		private readonly DelayedTextWriter _writer;
+		private bool _shouldRun;
 		private Point _mousePosition;
 		
-		public GameDebugger(Game game, long textUpdateRateMillis = 500)
+		public GameDebugger(Game game)
 		{
 			_game = game;
+			_shouldRun = true;
 			_mousePosition = new Point();
-			_writer = new DelayedTextWriter(Font);
 		}
 
 		public void Initialize()
 		{
-			_game.MouseMove += (sender, args) => { _mousePosition = args.Position; };			
+			_game.MouseMove += (sender, args) => { _mousePosition = args.Position; };
 		}
 
-		public void Run(string customText)
+		public void Stop()
 		{
-			var x = 0;
-			_writer.WriteTextDelayed("mousePos", "Mouse: " + _mousePosition, Vector2.One, 350);
-			x += 50;
-			_writer.WriteTextDelayed("fps", "FPS: " + (_game.RenderFrequency / 1)
-			                              .ToString(CultureInfo.InvariantCulture), new Vector2(0, x), 1000);
-			x += 50;
-			_writer.WriteTextDelayed("ups", "UPS: " + (_game.UpdateFrequency / 1)
-			                              .ToString(CultureInfo.InvariantCulture), new Vector2(0, x), 1000);
-			x += 50;
-			_writer.WriteTextDelayed("custom", customText, new Vector2(0, x));
+			_shouldRun = false;
 		}
-	
+
+		public void Run(Func<string> customText)
+		{
+			var texturesMouse = TextWriter.LoadText(Font, "Mouse: " + _mousePosition);
+			var queueSize = TextWriter.LoadText(Font, "RenderQ: " + RenderQueue.Instance.Count);
+			var textures = TextWriter.LoadText(Font, customText?.Invoke());
+			var action = new Action(() =>
+			{
+				GL.MatrixMode(MatrixMode.Projection);
+				GL.LoadIdentity();
+				GL.Ortho(0, _game.Width, _game.Height, 0, -1, 1);
+				TextWriter.PrintText(textures, Vector2.One);
+				TextWriter.PrintText(texturesMouse, new Vector2(0, 50));
+				TextWriter.PrintText(queueSize, new Vector2(0, 100));
+			});
+			var onCancel = new Action(() =>
+			{
+				Run(customText);
+			});
+			RenderQueue.Instance.Enqueue(500, action, onCancel);
+		}
+
+		public void Dispose()
+		{
+			Stop();
+			_game?.Dispose();
+		}
 	}
 }
