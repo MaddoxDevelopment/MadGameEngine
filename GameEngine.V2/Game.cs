@@ -35,7 +35,12 @@ namespace GameEngine.V2
 
 		private RectangleF _player => new RectangleF(_blockPosition.Current.X - _block.Width, _blockPosition.Current.Y - _block.Height, _block.Width, _block.Height);
 
+		private RectangleF _enemyRec => new RectangleF(_enemyPosition.Current.X - _enemy.Width, _enemyPosition.Current.Y - _enemy.Height, _enemy.Width, _enemy.Height);
+
+		
 		private readonly Position _blockPosition;
+		private readonly Position _enemyPosition;
+
 		
 		protected override void OnRenderFrame(FrameEventArgs e)
 		{
@@ -104,6 +109,7 @@ namespace GameEngine.V2
 			_debugger.Initialize();			
 			_block = SpriteLoader.LoadTexture("slimeBlock.png");
 			_blockPosition = new Position {Current = Vector2.Zero};
+			_enemyPosition = new Position { Current = Vector2.One };
 			_enemy = SpriteLoader.LoadTexture("alienBlue_front.png");
 			_camera = new TweenCamera
 			{
@@ -141,14 +147,12 @@ namespace GameEngine.V2
 			{
 				Sprite.Sprite.Begin(this);
 				_camera.Render(this);
-				Sprite.Sprite.Draw(_enemy, new Vector2(600, -90));
 			});
-			
-			
 			
 			RenderQueue.Instance.Enqueue(-1, () =>
 			{		
 				Sprite.Sprite.DrawWithRotation(rotation, _block, _player);	
+				Sprite.Sprite.DrawWithRotation(rotation, _enemy, _enemyRec);
 			});
 		}
 	}

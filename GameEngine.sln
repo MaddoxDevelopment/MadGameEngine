@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine", "GameEngine\Ga
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine.V2", "GameEngine.V2\GameEngine.V2.csproj", "{163EFF67-28DB-49D6-9B59-4DBFFC169AC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine.3D", "GameEngine.3D\GameEngine.3D.csproj", "{279258F8-7A90-4230-84EC-03028AD24DAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{163EFF67-28DB-49D6-9B59-4DBFFC169AC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{163EFF67-28DB-49D6-9B59-4DBFFC169AC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{163EFF67-28DB-49D6-9B59-4DBFFC169AC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{279258F8-7A90-4230-84EC-03028AD24DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{279258F8-7A90-4230-84EC-03028AD24DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{279258F8-7A90-4230-84EC-03028AD24DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{279258F8-7A90-4230-84EC-03028AD24DAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

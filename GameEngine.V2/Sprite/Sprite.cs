@@ -63,7 +63,6 @@ namespace GameEngine.V2.Sprite
 			GL.Begin(PrimitiveType.Quads);
 		
 			GL.MatrixMode(MatrixMode.Modelview);
-			//GL.LoadIdentity();
 
 			for (var i = 0; i < verts.Length; i++)
 			{
